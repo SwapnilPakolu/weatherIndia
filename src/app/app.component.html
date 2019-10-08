@@ -1,0 +1,124 @@
+<mat-toolbar class="mat-elevation-z6" color="primary">
+  <mat-icon>cloud</mat-icon>
+  <span style="margin-left:10px">Weather India</span>
+</mat-toolbar>
+<div class="container-fluid m-auto ">
+  <!-- <div class="row mx-auto mb-4 ">
+    <mat-card class="col-2 mat-elevation-z9  mr-3 mt-4">
+      <mat-card-header>
+        <mat-card-title> 5 Hotest </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ul>
+          <li *ngFor="let t of hotest">{{ t[0] + " " + t[1] }}</li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class=" col-2 mat-elevation-z9 mr-3 mt-4">
+      <mat-card-header>
+        <mat-card-title> 5 Coldest </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ul>
+          <li *ngFor="let t of coolest">{{ t[0] + " " + t[1] }}</li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class=" col-2 mat-elevation-z9 mr-3 mt-4">
+      <mat-card-header>
+        <mat-card-title> 5 Most Humid </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ul>
+          <li *ngFor="let t of mostHumid">{{ t[0] + " " + t[1] }}</li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class=" col-2 mat-elevation-z9 mr-3 mt-4">
+      <mat-card-header>
+        <mat-card-title> 5 Least Humid </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ul>
+          <li *ngFor="let t of driest">{{ t[0] + " " + t[1] }}</li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class=" col-2 mat-elevation-z9   mt-4">
+      <mat-card-header>
+        <mat-card-title> 5 Most Windy </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <ul>
+          <li *ngFor="let t of mostWindy">{{ t[0] + " " + t[1] }}</li>
+        </ul>
+      </mat-card-content>
+    </mat-card>
+  </div> -->
+
+  <!-- <div class="row mb-2">
+    <span class="offset-4 col-2" style="text-align:center"
+      ><img src="../assets/cold.svg" 
+    /></span>
+    <span class="col-2" style="text-align:center"
+      ><img src="../assets/drop.svg" 
+    /></span>
+    <span class="col-2" 
+      ><img src="../assets/wind.svg" 
+    /></span>
+  </div>
+  <div class="row mb-2" *ngFor="let t of complete">
+      <span class="col-2">{{ t['name'] }}</span>
+      
+      <span class="col-2"><img [src]='"../assets/weather/"+t["main"]+".svg"'  ></span>
+      <span class="col-2" style="text-align:center">{{ t["temperature"] | floor }} °C</span>
+      <span class="col-2" style="text-align:center">{{ t["humidity"] }}%</span>
+      <span class="col-2" style="text-align:center">{{ t["wind"] }}</span>
+    </div> -->
+<div class="row mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+      
+        <!-- Position Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element["name"]}} </td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="main">
+          <th mat-header-cell *matHeaderCellDef > Main </th>
+          <td mat-cell *matCellDef="let element"> <span class="col-2"><img [src]='"../assets/weather/"+element["main"]+".svg"' ></span> </td>
+        </ng-container>
+      
+        <!-- Weight Column -->
+        <ng-container matColumnDef="temperature" >
+          <th mat-header-cell *matHeaderCellDef  mat-sort-header> <img src="../assets/cold.svg" 
+            /></th>
+          <td mat-cell *matCellDef="let element"> {{element["temperature"]}}°C </td>
+        </ng-container>
+      
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="humidity">
+          <th mat-header-cell *matHeaderCellDef  mat-sort-header> <img src="../assets/drop.svg" 
+            /> </th>
+          <td mat-cell *matCellDef="let element"> {{element["humidity"]}}%</td>
+        </ng-container>
+        <ng-container matColumnDef="wind">
+            <th mat-header-cell *matHeaderCellDef  mat-sort-header> <img src="../assets/wind.svg" 
+              /> </th>
+            <td mat-cell *matCellDef="let element"> {{element["wind"]}} m/s </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="['name','main','temperature','humidity','wind']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['name','main','temperature','humidity','wind'];"></tr>
+
+        
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+</div>
+    
+      
+
+</div>
