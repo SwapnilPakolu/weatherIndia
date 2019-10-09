@@ -4,6 +4,7 @@ import { BehaviorSubject } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 //import {FloorPipe} from './pipes/floor.pipe'
 import { MatPaginator, MatSort, MatTableDataSource } from "@angular/material";
+import { weatherInterface } from "./weatherInterface";
 
 @Component({
   selector: "app-root",
@@ -14,84 +15,37 @@ export class AppComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  dataSource: MatTableDataSource<weatherElement> = new MatTableDataSource<
-    weatherElement
-  >(ELEMENT_DATA);
-  //complete:any ;
+  dataSource: MatTableDataSource<weatherInterface> = new MatTableDataSource(ELEMENT_DATA);
+  complete:weatherInterface[] ;
 
   title = "weatherIndia";
+
+    completeList: BehaviorSubject<Array<any>> = new BehaviorSubject(ELEMENT_DATA);
   
-  // tempList: BehaviorSubject<Array<any>> = new BehaviorSubject([]);
-  // humidityList: BehaviorSubject<Array<any>> = new BehaviorSubject([]);
-  // windList: BehaviorSubject<Array<any>> = new BehaviorSubject([]);
-   completeList: BehaviorSubject<Array<any>> = new BehaviorSubject([]);
-  // hotest = [["", ""]];
-  // coolest = [["", ""]];
-  // mostHumid = [["", ""]];
-  // mostWindy = [["", ""]];
-  // driest = [["", ""]];
-  constructor(private tpfc: TopFiveCitiesService) {}
+    constructor(private tpfc: TopFiveCitiesService) {}
   
   ngOnInit() {
-    // this.tempList
-    //   .pipe(debounceTime(1000))
-    //   .subscribe(value => (this.hotest = value.slice(0, 5)));
-
-    // this.tempList.pipe(debounceTime(1000)).subscribe(
-    //   value =>
-    //     (this.coolest = value
-    //       .slice()
-    //       .reverse()
-    //       .slice(0, 5))
-    // );
-
-    // this.humidityList
-    //   .pipe(debounceTime(1000))
-    //   .subscribe(value => (this.mostHumid = value.slice(0, 5)));
-    // this.humidityList.pipe(debounceTime(1000)).subscribe(
-    //   value =>
-    //     (this.driest = value
-    //       .slice()
-    //       .reverse()
-    //       .slice(0, 5))
-    // );
-
-    // this.windList
-    //   .pipe(debounceTime(1000))
-    //   .subscribe(value => (this.mostWindy = value.slice(0, 5)));
-
-    // this.completeList.pipe(debounceTime(1000)).subscribe(value => {
-    //   this.complete = value;
-    //   console.log(this.complete);
-    //   this.dataSource = new MatTableDataSource(this.complete);
-    //   this.dataSource.paginator = this.paginator;
-    //   this.dataSource.sort = this.sort;
-    // });
-
-     this.tpfc.getTopCities(
-    //   this.tempList,
-    //   this.humidityList,
-    //   this.windList,
-       this.completeList
-     );
-
-    //this.dataSource = new MatTableDataSource(this.complete);
+  
+    this.completeList.pipe(debounceTime(1000)).subscribe(value => {
+        this.complete = value;
+        this.dataSource = new MatTableDataSource(this.complete);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
+      
+      
+    
+    this.tpfc.getTopCities(this.completeList);
+    
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
 
-    //.subscribe(v=>{console.log(v)});
+    
   }
 }
 
-export interface weatherElement {
-  name: string;
-  main: string;
-  temperature: number;
-  humidity: number;
-  wind: number;
-}
 
-const ELEMENT_DATA: weatherElement[] = [
+const ELEMENT_DATA: weatherInterface[] = [
   { name: "Pune", main: "Rain", temperature: 22.41, humidity: 85, wind: 1.52 },
   { name: "Bhopal", main: "Haze", temperature: 25, humidity: 83, wind: 1.5 },
   {

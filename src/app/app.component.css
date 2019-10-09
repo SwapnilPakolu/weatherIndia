@@ -1,8 +1,11 @@
-li{
-    list-style-type:none;}
+li {
+  list-style-type: none;
+}
 
-    img 
-    {width:40px;}
-    table{
-        width:100%;
-    }
+img {
+  width: 40px;
+}
+
+table, .fullwidth {
+  width: 100%;
+}
